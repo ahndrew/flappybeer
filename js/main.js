@@ -9,6 +9,8 @@ function preload() {
     game.load.image('star', 'assets/star.png');
     game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
 
+    game.load.audio('boden', ['assets/audio/budligt_real_chinese.mp3']);
+
 }
 
 var player;
@@ -20,6 +22,9 @@ var score = 0;
 var scoreText;
 
 function create() {
+
+    music = game.add.audio('boden');
+    music.play();
 
     //  A simple background for our game
     game.add.sprite(0, 0, 'sky');
@@ -55,6 +60,7 @@ function create() {
     player.animations.add('left', [0, 1, 2, 3], 10, true);
     player.animations.add('right', [5, 6, 7, 8], 10, true);
 
+    /*
     //  Finally some stars to collect
     stars = game.add.group();
 
@@ -70,7 +76,7 @@ function create() {
         //  This just gives each star a slightly random bounce value
         star.body.bounce.y = 0.7 + Math.random() * 0.2;
     }
-
+*/
     //  The score
     scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
