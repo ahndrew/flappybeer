@@ -48,7 +48,7 @@ function create() {
 
     //  Player physics properties. Give the little guy a slight bounce.
     player.body.bounce.y = 0.2;
-    player.body.gravity.y = 6;
+    player.body.gravity.y = 1000;
     player.body.collideWorldBounds = true;
 
     //  Our two animations, walking left and right.
@@ -65,7 +65,7 @@ function create() {
         var star = stars.create(i * 70, 0, 'star');
 
         //  Let gravity do its thing
-        star.body.gravity.y = 6;
+        star.body.gravity.y = 1200;
 
         //  This just gives each star a slightly random bounce value
         star.body.bounce.y = 0.7 + Math.random() * 0.2;
@@ -116,7 +116,7 @@ function update() {
     //  Allow the player to jump if they are touching the ground.
     if (cursors.up.isDown && player.body.touching.down)
     {
-        player.body.velocity.y = -350;
+        player.body.velocity.y = -650;
     }
 
 }
