@@ -1,6 +1,12 @@
-pp.get('/', function(req, res){
+app.get('/', function(req, res){
   res.render('index', {
     title: 'Flappy Beer'
+  });
+});
+
+app.get('/leaderboard', function(req, res){
+  res.render('leaderboard', {
+    title: 'Hall of Fame'
   });
 });
 
