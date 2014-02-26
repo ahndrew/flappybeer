@@ -1,3 +1,6 @@
+var express = require('express');
+var app = express();
+
 app.get('/', function(req, res){
   res.sendfile('/views/index.html', {
     title: 'Flappy Beer'
@@ -21,3 +24,6 @@ app.get('/contact', function(req, res){
     title: 'Contact Team'
   });
 });
+
+app.listen(1234);
+
