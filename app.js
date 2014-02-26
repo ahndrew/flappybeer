@@ -1,23 +1,23 @@
 app.get('/', function(req, res){
-  res.render('index', {
+  res.sendfile('/views/index.html', {
     title: 'Flappy Beer'
   });
 });
 
 app.get('/leaderboard', function(req, res){
-  res.render('leaderboard', {
+  res.sendfile('/views/leaderboard.html', {
     title: 'Hall of Fame'
   });
 });
 
 app.get('/about', function(req, res){
-  res.render('about', {
+  res.sendfile('/views/about.html', {
     title: 'About Floopy Beer Team'
   });
 });
 
 app.get('/contact', function(req, res){
-  res.render('contact', {
+  res.sendfile('/views/contact_us.html', {
     title: 'Contact Team'
   });
 });
