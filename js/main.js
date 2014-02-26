@@ -1,10 +1,10 @@
 (function(){
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(512, 512, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 function preload() {
 
-    game.load.image('sky', 'assets/sky.png');
+    game.load.image('sky', 'assets/sky2.png');
     game.load.image('ground', 'assets/platform.png');
     game.load.image('star', 'assets/star.png');
     game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
@@ -24,10 +24,12 @@ var scoreText;
 function create() {
 
     music = game.add.audio('boden');
-    music.play();
+    //music.play();
 
     //  A simple background for our game
-    game.add.sprite(0, 0, 'sky');
+    //game.add.sprite(0, 0, 'sky');
+
+    bgtile = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('sky').height, 'sky');
 
     //  The platforms group contains the ground and the 2 ledges we can jump on
     platforms = game.add.group();
@@ -86,6 +88,8 @@ function create() {
 }
 
 function update() {
+
+     bgtile.tilePosition.x -= 10;
 
     //  Collide the player and the stars with the platforms
     game.physics.collide(player, platforms);
