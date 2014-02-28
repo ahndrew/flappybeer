@@ -45,11 +45,11 @@ var game = new Phaser.Game(
 function preload() {
     var assets = {
         spritesheet: {
-            birdie: ['/assets/birdie.png', 24, 24],
+            birdie: ['/assets/beerkeg.png', 50, 43],
             clouds: ['/assets/clouds.png', 128, 64]
         },
         image: {
-            finger: ['/assets/finger.png'],
+            finger: ['/assets/beerstein.png'],
             fence: ['/assets/fence.png']
         },
         audio: {
