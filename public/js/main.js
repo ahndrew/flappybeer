@@ -188,8 +188,8 @@ function reset() {
     gameOver = false;
     score = 0;
     credits.renderable = true;
-    scoreText.setText("DON'T\nTOUCH\nMY\nBIRDIE");
-    instText.setText("TOUCH TO FLAP\nBIRDIE WINGS");
+    scoreText.setText("FLAPPY BEER");
+    instText.setText("TOUCH TO FLAP\THE BEER");
     gameOverText.renderable = false;
     birdie.body.allowGravity = false;
     birdie.angle = 0;
@@ -297,7 +297,7 @@ function addScore(_, inv) {
 
 function setGameOver() {
     gameOver = true;
-    instText.setText("TOUCH BIRDIE\nTO TRY AGAIN");
+    instText.setText("PRESS \"R\" TO \nTO TRY AGAIN");
     instText.renderable = true;
     var hiscore = window.localStorage.getItem('hiscore');
     hiscore = hiscore ? hiscore : score;
@@ -315,7 +315,9 @@ function setGameOver() {
     // Stop spawning fingers
     fingersTimer.stop();
     // Make birdie reset the game
-    birdie.events.onInputDown.addOnce(reset);
+    var resetKey = game.input.keyboard.addKey(Phaser.Keyboard.R);
+    resetKey.onDown.addOnce(reset);
+    //birdie.events.onInputDown.addOnce(reset);
     hurtSnd.play();
 }
 
