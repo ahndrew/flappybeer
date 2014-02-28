@@ -5,8 +5,8 @@ canvas {
 
 #screen {
     margin: 0 auto;
-    max-height:500px;
-    max-width:500px;
+    max-height:600px;
+    max-width:700px;
     position: relative;
     overflow: hidden;
     

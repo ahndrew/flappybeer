@@ -1,4 +1,4 @@
-var DEBUG = false;
+var DEBUG = true;
 var SPEED = 690;
 var GRAVITY = 40;
 var FLAP = 620;
@@ -189,7 +189,7 @@ function reset() {
     score = 0;
     credits.renderable = true;
     scoreText.setText("FLAPPY BEER");
-    instText.setText("TOUCH TO FLAP\THE BEER");
+    instText.setText("TOUCH TO FLAP\nTHE BEER");
     gameOverText.renderable = false;
     birdie.body.allowGravity = false;
     birdie.angle = 0;
