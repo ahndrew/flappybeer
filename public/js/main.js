@@ -1,4 +1,4 @@
-var DEBUG = true;
+var DEBUG = false;
 var SPEED = 690;
 var GRAVITY = 40;
 var FLAP = 620;
@@ -45,7 +45,7 @@ var game = new Phaser.Game(
 function preload() {
     var assets = {
         spritesheet: {
-            birdie: ['/assets/beerkeg.png', 50, 43],
+            birdie: ['/assets/beerkeg.png', 24, 21],
             clouds: ['/assets/clouds.png', 128, 64]
         },
         image: {
