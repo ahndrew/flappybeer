@@ -54,7 +54,7 @@ function preload() {
         },
         audio: {
             flap: ['/assets/flap.wav'],
-            score: ['/assets/score.wav'],
+            //score: ['/assets/score.wav'],
             hurt: ['/assets/hurt.wav']
         }
     };
@@ -168,10 +168,12 @@ function create() {
     gameOverText.scale.setTo(2, 2);
     // Add sounds
     flapSnd = game.add.audio('flap');
-    scoreSnd = game.add.audio('score');
+    //scoreSnd = game.add.audio('score');
     hurtSnd = game.add.audio('hurt');
     // Add controls
-    game.input.onDown.add(flap);
+    var flapKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+    flapKey.onDown.add(flap);
     // Start clouds timer
     cloudsTimer = new Phaser.Timer(game);
     cloudsTimer.onEvent.add(spawnCloud);
@@ -290,7 +292,7 @@ function addScore(_, inv) {
     invs.remove(inv);
     score += 1;
     scoreText.setText(score);
-    scoreSnd.play();
+    //scoreSnd.play();
 }
 
 function setGameOver() {
