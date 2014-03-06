@@ -15,7 +15,7 @@ LeaderBoard = function(host, port) {
 LeaderBoard.prototype.getCollection = function(callback) {
 	tis.db.collection('leaderboard',  function(error, leaderboard_collection) {
     if( error ) callback(error);
-    else callback(null, leaderboard_collection);)
+    else callback(null, leaderboard_collection)
 	});
 };
 
