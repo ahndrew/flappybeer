@@ -10,9 +10,12 @@ function preload() {
 
 }
 
-var player;
-var platforms;
+var FLAP = 400;
+
+var beerkeg;
+var ground;
 var cursors;
+var platforms;
 
 var stars;
 var score = 0;
@@ -27,11 +30,6 @@ function create() {
 
     music = game.add.audio('boden');
     //music.play();
-
-    //  A simple background for our game
-    //game.add.sprite(0, 0, 'sky');
-
-    //bgtile = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('sky').height, 'sky');
 
     //  The platforms group contains the ground and the 2 ledges we can jump on
     platforms = game.add.group();
@@ -48,13 +46,17 @@ function create() {
     // The player and its settings
     beerkeg = createBeerKeg();
 
-    game.physics.collide(beerkeg, ground);
-
-    
 }
 
 function update() {
 
+    game.physics.collide(beerkeg, platforms);
+
+    var dvy = FLAP + beerkeg.body.velocity.y;
+    beerkeg.angle = (90 * dvy / FLAP) - 180;
+    if (beerkeg.angle < -30) {
+        beerkeg.angle = -30;
+                                                  }
      //bgtile.tilePosition.x -= 10;
 /*
     //  Collide the player and the stars with the platforms
@@ -104,14 +106,25 @@ function createBeerKeg() {
     beerkeg.animations.add('flap', [0, 1, 2, 3], 10, true);
     beerkeg.inputEnabled = true;
     beerkeg.body.collideWorldBounds = true;
+    beerkeg.body.gravity.y = 1000;
 
-    beerkeg.body.allowGravity = false;
+    beerkeg.body.allowGravity = true;
     beerkeg.angle = 0;
     beerkeg.reset(game.world.width / 4, game.world.height / 2);
     beerkeg.scale.setTo(2, 2);
     beerkeg.animations.play('flap');
 
+    game.input.onDown.add(flap);
+   
+    var flapKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+    flapKey.onDown.add(flap);
+
     return beerkeg;
+}
+
+function flap() {
+    beerkeg.body.velocity.y = -400;
 }
 
 })();
