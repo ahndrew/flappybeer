@@ -4,7 +4,8 @@ var GRAVITY = 30;
 var FLAP = 520;
 var SPAWN_RATE = 1 / 1.2;
 var OPENING = 134;
-var FINGER_BOX_MINUS = 38;
+var FINGER_BOX_MINUS_X = 38;
+var FINGER_BOX_MINUS_Y = 20;
 var INVS_BOX_MINUS = 20;
 
 WebFontConfig = {
@@ -46,7 +47,7 @@ var game = new Phaser.Game(
 function preload() {
     var assets = {
         spritesheet: {
-            birdie: ['/assets/beerkeg.png', 24, 21],
+            birdie: ['/assets/coachlee.png', 24, 21],
             clouds: ['/assets/clouds.png', 128, 64]
         },
         image: {
@@ -54,9 +55,9 @@ function preload() {
             fence: ['/assets/fence.png']
         },
         audio: {
-            flap: ['/assets/flap.wav'],
+            flap: ['/audio/flap.wav'],
             //score: ['/assets/score.wav'],
-            hurt: ['/assets/hurt.wav']
+            hurt: ['/audio/die.wav']
         }
     };
     Object.keys(assets).forEach(function(type) {
@@ -262,13 +263,14 @@ function spawnFinger(fingerY, flipped, box) {
 
     finger.body.allowGravity = false;
 
+    // modify the collision box
+    finger.body.setSize(finger.body.width - FINGER_BOX_MINUS_X, finger.body.height, finger.body.offset.x, finger.body.offset.y);
+
     // Flip finger! *GASP*
     finger.scale.setTo(1.5, flipped ? -2 : 2);
-    finger.body.offset.y = flipped ? -finger.body.height * 2 : 0;
+    finger.body.offset.y = flipped ? -finger.body.height * 2 - FINGER_BOX_MINUS_Y: FINGER_BOX_MINUS_Y;
 
-    // modify the collision box
-    finger.body.setSize(finger.body.width - FINGER_BOX_MINUS, finger.body.height, finger.body.offset.x, finger.body.offset.y);
-
+    
     // Move to the left
     finger.body.velocity.x = -SPEED;
 
@@ -285,7 +287,7 @@ function spawnFingers() {
     var topFinger = spawnFinger(fingerY, true);
 
     // Add invisible thingy
-    var inv = invs.create(topFinger.x + topFinger.width - FINGER_BOX_MINUS - INVS_BOX_MINUS, 0);
+    var inv = invs.create(topFinger.x + topFinger.width - FINGER_BOX_MINUS_X - INVS_BOX_MINUS, 0);
     inv.width = 1.5;
     inv.height = game.world.height;
     inv.body.allowGravity = false;
