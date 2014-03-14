@@ -1,7 +1,7 @@
 var DEBUG = false;
 var SPEED = 300;
-var GRAVITY = 30;
-var FLAP = 520;
+var GRAVITY = 25;
+var FLAP = 500;
 var SPAWN_RATE = 1 / 1.2;
 var OPENING = 134;
 var FINGER_BOX_MINUS_X = 38;
@@ -48,7 +48,7 @@ var game = new Phaser.Game(
 function preload() {
     var assets = {
         spritesheet: {
-            birdie: ['/assets/flappysprites.png', 24, 21],
+            birdie: ['/assets/flappysprites.png', 25, 24],
             clouds: ['/assets/clouds.png', 128, 64]
         },
         image: {
@@ -136,7 +136,7 @@ function create() {
     // Add score text
     scoreText = game.add.text(
         game.world.width / 2,
-        game.world.height / 4,
+        game.world.height / 7,
         "",
         {
             font: '16px "Press Start 2P"',
@@ -150,7 +150,7 @@ function create() {
     // Add instructions text
     instText = game.add.text(
         game.world.width / 2,
-        game.world.height - game.world.height / 4,
+        game.world.height - game.world.height / 7,
         "",
         {
             font: '8px "Press Start 2P"',
