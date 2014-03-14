@@ -293,7 +293,7 @@ function spawnFinger(fingerY, flipped, box) {
 
     var finger = fingers.create(
         game.width,
-        fingerY + (flipped ? -o() : o()) / 2,
+        fingerY + (flipped ? -o() : o()) / 3,
         'finger'
     );
 
