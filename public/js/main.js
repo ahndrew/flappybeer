@@ -1,7 +1,7 @@
 var DEBUG = false;
 var SPEED = 300;
-var GRAVITY = 25;
-var FLAP = 500;
+var GRAVITY = 30;
+var FLAP = 520;
 var SPAWN_RATE = 1 / 1.2;
 var OPENING = 134;
 var FINGER_BOX_MINUS_X = 38;
@@ -289,7 +289,7 @@ function o() {
     return OPENING + 60 * ((score > 50 ? 50 : 50 - score) / 50);
 }
 
-function spawnFinger(fingerY, flipped, box) {
+function spawnFinger(fingerY, flipped) {
 
     var finger = fingers.create(
         game.width,
