@@ -1,10 +1,11 @@
 var DEBUG = false;
-var SPEED = 690;
-var GRAVITY = 40;
-var FLAP = 620;
+var SPEED = 300;
+var GRAVITY = 30;
+var FLAP = 520;
 var SPAWN_RATE = 1 / 1.2;
 var OPENING = 134;
-
+var FINGER_BOX_MINUS = 38;
+var INVS_BOX_MINUS = 20;
 
 WebFontConfig = {
     google: { families: [ 'Press+Start+2P::latin' ] },
@@ -72,6 +73,7 @@ var gameStarted,
     credits,
     clouds,
     fingers,
+    fingerBoxes,
     invs,
     birdie,
     fence,
@@ -250,17 +252,22 @@ function o() {
     return OPENING + 60 * ((score > 50 ? 50 : 50 - score) / 50);
 }
 
-function spawnFinger(fingerY, flipped) {
+function spawnFinger(fingerY, flipped, box) {
+
     var finger = fingers.create(
         game.width,
         fingerY + (flipped ? -o() : o()) / 2,
         'finger'
     );
+
     finger.body.allowGravity = false;
 
     // Flip finger! *GASP*
-    finger.scale.setTo(2, flipped ? -2 : 2);
+    finger.scale.setTo(1.5, flipped ? -2 : 2);
     finger.body.offset.y = flipped ? -finger.body.height * 2 : 0;
+
+    // modify the collision box
+    finger.body.setSize(finger.body.width - FINGER_BOX_MINUS, finger.body.height, finger.body.offset.x, finger.body.offset.y);
 
     // Move to the left
     finger.body.velocity.x = -SPEED;
@@ -278,8 +285,8 @@ function spawnFingers() {
     var topFinger = spawnFinger(fingerY, true);
 
     // Add invisible thingy
-    var inv = invs.create(topFinger.x + topFinger.width, 0);
-    inv.width = 2;
+    var inv = invs.create(topFinger.x + topFinger.width - FINGER_BOX_MINUS - INVS_BOX_MINUS, 0);
+    inv.width = 1.5;
     inv.height = game.world.height;
     inv.body.allowGravity = false;
     inv.body.velocity.x = -SPEED;
