@@ -7,6 +7,7 @@ var OPENING = 134;
 var FINGER_BOX_MINUS_X = 38;
 var FINGER_BOX_MINUS_Y = 20;
 var INVS_BOX_MINUS = 20;
+var NUM_DIFF_SPRITES = 2;
 
 WebFontConfig = {
     google: { families: [ 'Press+Start+2P::latin' ] },
@@ -47,7 +48,7 @@ var game = new Phaser.Game(
 function preload() {
     var assets = {
         spritesheet: {
-            birdie: ['/assets/coachlee.png', 24, 21],
+            birdie: ['/assets/flappysprites.png', 24, 21],
             clouds: ['/assets/clouds.png', 128, 64]
         },
         image: {
@@ -77,6 +78,8 @@ var gameStarted,
     fingerBoxes,
     invs,
     birdie,
+    birdieFlap,
+    currentBirdieSprite,
     fence,
     scoreText,
     instText,
@@ -119,10 +122,14 @@ function create() {
     // Add birdie
     birdie = game.add.sprite(0, 0, 'birdie');
     birdie.anchor.setTo(0.5, 0.5);
-    birdie.animations.add('fly', [0, 1, 2, 3], 10, true);
+    birdieFlap = 'fly';
+    addSpriteAnimations();
     birdie.inputEnabled = true;
     birdie.body.collideWorldBounds = true;
     birdie.body.gravity.y = GRAVITY;
+
+    currentBirdieSprite = 0;
+
     // Add fence
     fence = game.add.tileSprite(0, game.world.height - 32, game.world.width, 32, 'fence');
     fence.tileScale.setTo(2, 2);
@@ -177,6 +184,11 @@ function create() {
     var flapKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
     flapKey.onDown.add(flap);
+
+    var secretKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
+
+    secretKey.onDown.add(changeBirdie);
+
     // Start clouds timer
     cloudsTimer = new Phaser.Timer(game);
     cloudsTimer.onEvent.add(spawnCloud);
@@ -198,7 +210,7 @@ function reset() {
     birdie.angle = 0;
     birdie.reset(game.world.width / 4, game.world.height / 2);
     birdie.scale.setTo(2, 2);
-    birdie.animations.play('fly');
+    birdie.animations.play(birdieFlap);
     fingers.removeAll();
     invs.removeAll();
 }
@@ -226,6 +238,30 @@ function flap() {
         birdie.body.velocity.y = -FLAP;
         flapSnd.play();
     }
+}
+
+function addSpriteAnimations() { 
+    birdie.animations.add('fly', [0,1,2,3], 10, true);
+ 
+    for(var i = 1; i < NUM_DIFF_SPRITES; i++) { 
+     	birdie.animations.add('fly' + i, [0 + 4*i, 1 + 4*i, 2 + 4*i, 3 + 4*i], 10, true);
+    } 
+}
+
+function changeBirdie() { 
+
+    birdie.animations.stop(birdieFlap);
+
+    if (currentBirdieSprite < NUM_DIFF_SPRITES - 1) { 
+	currentBirdieSprite += 1;
+
+	birdieFlap = 'fly' + currentBirdieSprite;
+	
+    } else {
+	currentBirdieSprite = 0;
+	birdieFlap = 'fly';
+    }
+	
 }
 
 function spawnCloud() {
@@ -345,9 +381,9 @@ function update() {
         ) {
             birdie.angle = 90;
             birdie.animations.stop();
-            birdie.frame = 3;
+            birdie.frame = 3 + currentBirdieSprite*4;
         } else {
-            birdie.animations.play('fly');
+            birdie.animations.play(birdieFlap);
         }
         // Birdie is DEAD!
         if (gameOver) {
@@ -378,6 +414,7 @@ function update() {
         fingersTimer.update();
     } else {
         birdie.y = (game.world.height / 2) + 8 * Math.cos(game.time.now / 200);
+        birdie.animations.play(birdieFlap);
     }
     if (!gameStarted || gameOver) {
         // Shake instructions text
